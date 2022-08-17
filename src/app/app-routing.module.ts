@@ -5,7 +5,7 @@ import {ErrorPageComponent} from "./error-page/error-page.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/recipes', pathMatch: 'full ' },
+  { path: '', redirectTo: '/recipes', pathMatch: 'full' },
   { path: 'recipes', component: RecipesComponent },
   // { path: 'recipes', component: RecipesComponent,
   //   children: [
