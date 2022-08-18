@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Recipe} from "../recipe.model";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {RecipeService} from "../recipe.service";
 
 @Component({
@@ -15,6 +15,7 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private recipeService: RecipeService
   ) { }
 
@@ -25,4 +26,9 @@ export class RecipeDetailComponent implements OnInit {
     })
   }
 
+  onEdit() {
+    this.router.navigate(['edit'], {relativeTo: this.activatedRoute});
+    // alternatywnie:
+    // this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.activatedRoute});
+  }
 }
