@@ -11,6 +11,9 @@ export class RecipeItemComponent implements OnInit {
   @Input()
   recipe: Recipe | undefined;
 
+  @Input()
+  index: number | undefined;
+
   constructor(
     private recipeService: RecipeService,
   ) { }
