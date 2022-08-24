@@ -1,6 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Ingredient} from "../../shared/ingredient.model";
 import {ShoppingListService} from "../shopping-list.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-shopping-edit',
@@ -8,21 +9,41 @@ import {ShoppingListService} from "../shopping-list.service";
   styleUrls: ['./shopping-edit.component.css'],
 })
 export class ShoppingEditComponent implements OnInit {
-  @ViewChild('nameInput') nameInputRef: ElementRef | undefined;
-  @ViewChild('amountInput') amountInputRef: ElementRef | undefined;
+  @ViewChild('f') shoppingEditForm: NgForm | undefined;
+  editedItemIndex: number | undefined;
+  editMode = false;
+  editedItem: Ingredient | undefined;
 
   constructor(
     private shoppingListService: ShoppingListService,
   ) { }
 
   ngOnInit(): void {
+
+
+
+    this.shoppingListService.ingredientEdit.subscribe((index) => {
+      this.editedItem = this.shoppingListService.getIngredient(index);
+      this.editedItemIndex = index;
+      this.editMode = true;
+      this.shoppingEditForm?.setValue({
+        "name": this.editedItem?.name,
+        "amount": this.editedItem?.amount,
+      })
+    })
   }
 
-  onAddButton() {
-    const name = this.nameInputRef?.nativeElement.value;
-    const amount = this.amountInputRef?.nativeElement.value;
-    const newIngredient = new Ingredient(name, amount);
-    this.shoppingListService.ingredientWasAdded(newIngredient);
+  onSubmit(f: NgForm) {
+    const value = f.value;
+    const newIngredient = new Ingredient(value.name, value.amount);
+    if (this.editMode) {
+      this.shoppingListService.updateIngredient(this.editedItemIndex as number, newIngredient);
+    } else {
+      this.shoppingListService.addIngredient(newIngredient);
+    }
+    this.editMode = false;
+    f?.reset();
+
   }
 
 }
