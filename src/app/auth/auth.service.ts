@@ -39,31 +39,4 @@ export class AuthService {
     );
   }
 
-  fetchPosts() {
-    let searchParams = new HttpParams();
-    searchParams = searchParams.append('print', 'pretty');
-    searchParams = searchParams.append('custom', 'key'); // nic nie robi, ot taki example
-
-    return this.http
-      .get('https://ng-complete-guide-41326-default-rtdb.firebaseio.com/posts.json',
-        {
-          headers: new HttpHeaders({"Custom-Header": 'HELLLLLLOOOOOOOOOOOOOO'}),
-          // params: new HttpParams().set('print', 'pretty')
-          params: searchParams,
-          responseType: 'json' // ale nie text, bo przekazujemy obiekt a nie string
-        })
-      // .pipe(
-      //   map((responseData) => {
-      //     const postArray: Post[] = [];
-      //     for (const key in responseData) {
-      //       if (responseData.hasOwnProperty(key)) {
-      //         postArray.push({...responseData[key], id: key})
-      //       }
-      //     }
-      //     return postArray;
-      //   })
-      // );
-  }
-
-
 }
