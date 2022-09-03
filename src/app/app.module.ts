@@ -1,7 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
-
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {ShoppingListComponent} from './shopping-list/shopping-list.component';
@@ -36,8 +34,8 @@ import {RecipesModule} from "./recipes/recipes.module";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule,
-    RecipesModule
+    RecipesModule,
+    AppRoutingModule
   ],
   providers: [ShoppingListService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
