@@ -19,14 +19,16 @@ import {RecipesRoutingModule} from "./recipes-routing.module";
     RecipeStartComponent,
     RecipeEditComponent,
   ],
-  exports: [
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
-    RecipeStartComponent,
-    RecipeEditComponent,
-  ],
+  // nie musimy eksportowac bo steruje tym recipes-routing.module.ts
+
+  // exports: [
+  //   RecipesComponent,
+  //   RecipeListComponent,
+  //   RecipeDetailComponent,
+  //   RecipeItemComponent,
+  //   RecipeStartComponent,
+  //   RecipeEditComponent,
+  // ],
   imports: [
     RouterModule,
     CommonModule,
