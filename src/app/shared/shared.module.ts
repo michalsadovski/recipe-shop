@@ -4,7 +4,6 @@ import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.compone
 import {AlertComponent} from "./alert/alert.component";
 import {CommonModule} from "@angular/common";
 
-
 @NgModule({
   declarations: [
     AlertComponent,
