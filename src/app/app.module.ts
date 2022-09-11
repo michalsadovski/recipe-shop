@@ -8,6 +8,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core.module";
 import {AppRoutingModule} from "./app-routing.module";
+import { StoreModule } from "@ngrx/store";
+import {reducers} from "./shopping-list/store";
+
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import {AppRoutingModule} from "./app-routing.module";
     HttpClientModule,
     SharedModule,
     AppRoutingModule,
+    StoreModule.forRoot(reducers),
     CoreModule
   ],
   providers: [],
