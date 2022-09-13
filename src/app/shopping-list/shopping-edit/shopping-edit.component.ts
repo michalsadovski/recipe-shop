@@ -22,9 +22,6 @@ export class ShoppingEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-
-
     this.shoppingListService.ingredientEdit.subscribe((index) => {
       this.editedItem = this.shoppingListService.getIngredient(index);
       this.editedItemIndex = index;
