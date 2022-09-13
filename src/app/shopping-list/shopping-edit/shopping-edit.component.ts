@@ -37,7 +37,10 @@ export class ShoppingEditComponent implements OnInit {
     const value = f.value;
     const newIngredient = new Ingredient(value.name, value.amount);
     if (this.editMode) {
-      this.shoppingListService.updateIngredient(this.editedItemIndex as number, newIngredient);
+      // this.shoppingListService.updateIngredient(this.editedItemIndex as number, newIngredient);
+      this.store.dispatch(new ShoppingListActions.UpdateIngredient(
+        {index: this.editedItemIndex as number, ingredient: newIngredient}
+        ));
     } else {
       // this.shoppingListService.addIngredient(newIngredient);
       this.store.dispatch(new ShoppingListActions.AddIngredient(newIngredient));
@@ -53,7 +56,8 @@ export class ShoppingEditComponent implements OnInit {
   }
 
   onDeleteItem() {
+    // this.shoppingListService.deleteIngredient(this.editedItemIndex as number);
+    this.store.dispatch(new ShoppingListActions.DeleteIngredient(this.editedItemIndex as number));
     this.onClearItem();
-    this.shoppingListService.deleteIngredient(this.editedItemIndex as number);
   }
 }

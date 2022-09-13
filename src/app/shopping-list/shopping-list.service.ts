@@ -11,8 +11,8 @@ export class ShoppingListService {
   ingredientEdit = new Subject<number>();
 
   private ingredients: Ingredient[] = [
-    new Ingredient('pepper', 15),
-    new Ingredient('pepper', 20)
+    new Ingredient('Apples', 5),
+    new Ingredient("Tomatoes", 4),
   ];
 
   constructor() { }
