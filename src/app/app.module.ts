@@ -9,7 +9,7 @@ import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core.module";
 import {AppRoutingModule} from "./app-routing.module";
 import {StoreModule} from "@ngrx/store";
-import {reducers} from "./shopping-list/store";
+import {reducers} from "./store/app.reducer";
 
 @NgModule({
   declarations: [
