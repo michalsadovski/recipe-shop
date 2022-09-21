@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {AuthResponseData, AuthService} from "./auth.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
@@ -12,10 +12,11 @@ import * as AuthActions from "./store/auth.actions";
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error: string | undefined;
+  private storeSub: Subscription | undefined;
 
   constructor(
     private authService: AuthService,
@@ -24,7 +25,7 @@ export class AuthComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.store.select('auth').subscribe(authState => {
+    this.storeSub = this.store.select('auth').subscribe(authState => {
       this.isLoading = authState.loading;
       this.error = authState.authError;
     })
@@ -70,6 +71,12 @@ export class AuthComponent implements OnInit {
   }
 
   onHandleError() {
-    return this.error = undefined;
+    // return this.error = undefined;
+    this.store.dispatch(new AuthActions.ClearError())
   }
+
+  ngOnDestroy(): void {
+    this.storeSub?.unsubscribe();
+  }
+
 }
