@@ -1,13 +1,14 @@
-import {Actions, Effect, ofType} from '@ngrx/effects'
-import {catchError, map, switchMap, tap} from "rxjs/operators";
-import {of} from "rxjs";
-import {Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
-import * as AuthActions from "./auth.actions"
-import {environment} from "../../../environments/environment";
-import {AuthResponseData, AuthService} from "../auth.service";
-import {Injectable} from "@angular/core";
-import {User} from "../user.model";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Actions, ofType, Effect } from '@ngrx/effects';
+import { switchMap, catchError, map, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
+import * as AuthActions from './auth.actions';
+import { User } from '../user.model';
+import {AuthResponseData, AuthService} from '../auth.service';
 
 const handleAuthentication = (
   expiresIn: number,
@@ -22,7 +23,8 @@ const handleAuthentication = (
     email: email,
     userId: userId,
     token: token,
-    expirationDate: expirationDate
+    expirationDate: expirationDate,
+    redirect: true
   });
 };
 
@@ -116,8 +118,10 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   authRedirect = this.actions$.pipe(
     ofType(AuthActions.AUTHENTICATE_SUCCESS),
-    tap(() => {
-      this.router.navigate(['/']);
+    tap((authSuccessAction: AuthActions.AuthenticateSuccess) => {
+      if (authSuccessAction.payload.redirect) {
+        this.router.navigate(['/']);
+      }
     })
   );
 
@@ -152,7 +156,8 @@ export class AuthEffects {
           email: loadedUser.email,
           userId: loadedUser.id,
           token: loadedUser.token,
-          expirationDate: new Date(userData._tokenExpirationDate)
+          expirationDate: new Date(userData._tokenExpirationDate),
+          redirect: false
         });
 
         // this.autoLogout(expirationDuration);

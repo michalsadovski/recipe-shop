@@ -4,6 +4,7 @@ import {Ingredient} from "../shared/ingredient.model";
 import {Subject} from "rxjs";
 import {Store} from "@ngrx/store";
 import * as ShoppingListActions from "../shopping-list/store/shopping-list.actions";
+import * as RecipeAction from "../recipes/store/recipe.actions";
 import * as fromApp from "../store/app.reducer";
 
 @Injectable({
@@ -59,7 +60,8 @@ export class RecipeService {
 
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
-    this.recipesChanged.next(this.getRecipes());
+    // this.recipesChanged.next(this.getRecipes());
+    this.store.dispatch(new RecipeAction.AddRecipe(recipe));
   }
 
   updateRecipe(index: number, newRecipe: Recipe) {
