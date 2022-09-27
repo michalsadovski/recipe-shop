@@ -1,6 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Recipe} from "./recipe.model";
-import {RecipeService} from "./recipe.service";
 
 @Component({
   selector: 'app-recipes',
@@ -14,7 +13,7 @@ export class RecipesComponent implements OnInit, OnDestroy {
   @Output()
   recipeWasSelected = new EventEmitter<string>();
 
-  constructor(private recipeService: RecipeService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

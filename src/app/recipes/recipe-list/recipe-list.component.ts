@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 
 import { Recipe } from '../recipe.model';
 import * as fromApp from '../../store/app.reducer';
-import {RecipeService} from "../recipe.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -20,7 +19,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private recipeService: RecipeService,
     private router: Router,
     private store: Store<fromApp.AppState>
   ) { }
@@ -32,7 +30,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       .subscribe((recipes: Recipe[]) => {
       this.recipes = recipes;
     });
-    this.recipes = this.recipeService.getRecipes();
   }
 
   onNewRecipe() {

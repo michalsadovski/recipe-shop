@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Recipe} from "../recipe.model";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {RecipeService} from "../recipe.service";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Ingredient} from "../../shared/ingredient.model";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
-import {pipe} from "rxjs";
 import {map, switchMap} from "rxjs/operators";
 import * as RecipeActions from "../store/recipe.actions";
+import * as ShoppingListActions from "../../shopping-list/store/shopping-list.actions";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -22,7 +21,6 @@ export class RecipeDetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private recipeService: RecipeService,
     private store: Store<fromApp.AppState>
   ) { }
 
@@ -54,7 +52,8 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onAddToShoppingList() {
-    this.recipeService.addIngredientsToShoppingList(this.recipeDetail?.ingredients as Ingredient[]);
+    // this.recipeService.addIngredientsToShoppingList(this.recipeDetail?.ingredients as Ingredient[]);
+    this.store.dispatch(new ShoppingListActions.AddIngredients(this.recipeDetail?.ingredients as Ingredient[]))
   }
 
   onDeleteRecipe() {
