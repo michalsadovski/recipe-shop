@@ -8,23 +8,17 @@ import { Recipe } from '../recipe.model';
 
 @Injectable()
 export class RecipeEffects {
+
   @Effect()
   fetchRecipes = this.actions$.pipe(
     ofType(RecipesActions.FETCH_RECIPES),
-    switchMap(() => {
-      return this.httpClient.get<Recipe[]>('https://recipe-shop-9f150-default-rtdb.firebaseio.com/recipes.json')
-    }),
-    map(recipes => {
-      return recipes.map(recipe => {
-        return {
-          ...recipe,
-          ingredients: recipe.ingredients ? recipe.ingredients : []
-        };
-      });
-    }),
-    map(recipes => {
-      return new RecipesActions.SetRecipes(recipes);
-    })
+    switchMap(() => this.httpClient.get<Recipe[]>('https://recipe-shop-9f150-default-rtdb.firebaseio.com/recipes.json')),
+    map(recipes => new RecipesActions.SetRecipes(
+      recipes
+        ? recipes.map(recipe => ({ ingredients: [], ...recipe }))
+        : []
+      )
+    )
   );
 
   constructor(private actions$: Actions, private httpClient: HttpClient) {}

@@ -22,29 +22,30 @@ export function recipeReducer(state = initialState,
         ...state,
         recipes: [...action.payload]
       };
-    // case RecipeActions.ADD_RECIPE:
-    //   return {
-    //     ...state,
-    //     recipes: [...state.recipes, action.payload]
-    //   };
-    // case RecipeActions.UPDATE_RECIPE:
-    //   const recipe = state.recipes[state.editedRecipeIndex];
-    //   const updatedRecipe = {
-    //     ...recipe,
-    //     ...action.payload
-    //   };
-    //   const updatedRecipes = [...state.recipes];
-    //   updatedRecipes[state.editedRecipeIndex] = updatedRecipe;
-    //   return {
-    //     ...state,
-    //     ingredients: updatedRecipes,
-    //     editedIngredientIndex: -1,
-    //     editedIngredient: null
-    //   };
-    // case RecipeActions.DELETE_RECIPE:
-    //   return {
-    //     ...state,
-    //   };
+    case RecipeActions.ADD_RECIPE:
+      return {
+        ...state,
+        recipes: [...state.recipes, action.payload]
+      };
+    case RecipeActions.UPDATE_RECIPE:
+      const updatedRecipe = {
+        ...state.recipes[action.payload.index] as object,
+        ...action.payload.newRecipe
+      };
+      const updatedRecipes = [...state.recipes];
+      // @ts-ignore
+      updatedRecipes[action.payload.index] = updatedRecipe;
+      return {
+        ...state,
+        recipes: updatedRecipes,
+      };
+    case RecipeActions.DELETE_RECIPE:
+      return {
+        ...state,
+        recipes: state.recipes.filter((recipe, index) => {
+          return index !== action.payload
+        })
+      };
     default:
       return state;
   }
